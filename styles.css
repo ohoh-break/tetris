@@ -1,0 +1,268 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #1a1a1a;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
+    color: #e0e0e0;
+}
+
+.game-container {
+    display: flex;
+    gap: 3rem;
+    padding: 2.5rem;
+    background: #242424;
+    border: 1px solid #333;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.game-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 1.5rem;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    min-width: 280px;
+}
+
+.score, .level {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    padding: 1rem;
+    background: #242424;
+    border: 1px solid #333;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.next-piece {
+    background: #242424;
+    padding: 1.5rem;
+    border: 1px solid #333;
+    text-align: center;
+}
+
+.next-piece h3 {
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 1.5rem;
+    color: #e0e0e0;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+}
+
+.game-board {
+    position: relative;
+}
+
+#tetris {
+    border: 2px solid #333;
+    background: #1a1a1a;
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+button {
+    padding: 1rem 2rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    border: 1px solid #333;
+    background: #242424;
+    color: #e0e0e0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+button:hover {
+    background: #333;
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+/* 보석 효과를 위한 애니메이션 */
+@keyframes gemGlow {
+    0% {
+        box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    }
+    100% {
+        box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+    }
+}
+
+.game-board {
+    animation: gemGlow 3s infinite;
+}
+
+/* 라인 클리어 애니메이션 */
+@keyframes lineClear {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(0);
+        opacity: 0;
+    }
+}
+
+.line-clearing {
+    animation: lineClear 0.5s ease-out;
+}
+
+/* 특별 효과 메시지 */
+.special-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #e0e0e0;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1000;
+    letter-spacing: 3px;
+}
+
+@keyframes specialMessage {
+    0% {
+        transform: translate(-50%, -50%) scale(0.5);
+        opacity: 0;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0;
+    }
+}
+
+.special-message.show {
+    animation: specialMessage 1.5s ease-out;
+}
+
+/* 보석 회전 애니메이션 */
+@keyframes gemRotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.rotating {
+    animation: gemRotate 0.3s ease-out;
+}
+
+/* 보석 하이라이트 효과 */
+@keyframes gemHighlight {
+    0% {
+        filter: brightness(1);
+    }
+    50% {
+        filter: brightness(1.5);
+    }
+    100% {
+        filter: brightness(1);
+    }
+}
+
+.highlight {
+    animation: gemHighlight 0.5s ease-in-out;
+}
+
+/* 게임 통계 스타일 */
+.game-stats {
+    background: #242424;
+    padding: 1.5rem;
+    border: 1px solid #333;
+    margin-top: 2rem;
+}
+
+.game-stats h3 {
+    font-family: 'Playfair Display', serif;
+    color: #e0e0e0;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+}
+
+.game-stats h4 {
+    font-family: 'Playfair Display', serif;
+    color: #e0e0e0;
+    margin: 1.5rem 0 1rem;
+    font-size: 1rem;
+    letter-spacing: 1px;
+}
+
+.game-stats p {
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+    color: #b0b0b0;
+}
+
+.game-history {
+    max-height: 200px;
+    overflow-y: auto;
+    margin-top: 1rem;
+}
+
+.history-item {
+    background: #1a1a1a;
+    padding: 1rem;
+    margin: 0.8rem 0;
+    border: 1px solid #333;
+}
+
+.history-item p {
+    margin: 0.3rem 0;
+    font-size: 0.8rem;
+}
+
+/* 스크롤바 스타일링 */
+.game-history::-webkit-scrollbar {
+    width: 4px;
+}
+
+.game-history::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+
+.game-history::-webkit-scrollbar-thumb {
+    background: #333;
+}
+
+.game-history::-webkit-scrollbar-thumb:hover {
+    background: #444;
+} 
